@@ -1,7 +1,0 @@
-mongoose - for database
-jsonwebtoken - for authentication
-express = for api
-bcryptjs - for hash password
-dotenv - for create content for npm files 
-cookies-parser - for getting cookies req.
-cloudinary - for images upload
