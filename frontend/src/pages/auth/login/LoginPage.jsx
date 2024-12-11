@@ -65,6 +65,7 @@ const LoginPage = () => {
 			</div>
 			<div className='flex-1 flex flex-col justify-center items-center'>
 				<form className='flex gap-4 flex-col' onSubmit={handleSubmit}>
+					<img src={IMG1} className="w-60 lg:hidden fill-white" alt="" />
 					{/* <XSvg className='w-24 lg:hidden fill-white' /> */}
 					<h1 className='text-2xl font-extrabold text-white'>{"Let's"} go . . .</h1>
 					<label className='input input-bordered rounded flex items-center gap-2'>
