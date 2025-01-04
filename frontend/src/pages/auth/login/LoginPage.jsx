@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import XSvg from "../../../components/svgs/X";
 import IMG1 from '../../../../public/images/img1.png';
 
 import { MdOutlineMail } from "react-icons/md";
