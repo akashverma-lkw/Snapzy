@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import Posts from "../../components/common/Posts";
 import CreatePost from "./CreatePost";
 
@@ -8,36 +7,42 @@ const HomePage = () => {
 
 	return (
 		<>
-			<div className='flex-[4_4_0] mr-auto border-r border-gray-700 min-h-screen'>
+			<div className="flex-[4_4_0] mx-auto border-r mt-16 border-gray-700 min-h-screen w-full max-w-2xl">
 				{/* Header */}
-				<div className='flex w-full border-b border-gray-700'>
+				<div className="flex w-full border-b border-gray-700">
 					<div
-						className={
-							"flex justify-center flex-1 p-3 hover:bg-secondary transition duration-300 cursor-pointer relative"
-						}
+						className={`flex justify-center flex-1 p-3 hover:bg-secondary transition duration-300 cursor-pointer relative text-sm sm:text-base ${
+							feedType === "forYou" ? "font-bold" : ""
+						}`}
 						onClick={() => setFeedType("forYou")}
 					>
-						For you
+						For You
 						{feedType === "forYou" && (
-							<div className='absolute bottom-0 w-10  h-1 rounded-full bg-primary'></div>
+							<div className="absolute bottom-0 w-10 h-1 rounded-full bg-primary"></div>
 						)}
 					</div>
 					<div
-						className='flex justify-center flex-1 p-3 hover:bg-secondary transition duration-300 cursor-pointer relative'
+						className={`flex justify-center flex-1 p-3 hover:bg-secondary transition duration-300 cursor-pointer relative text-sm sm:text-base ${
+							feedType === "following" ? "font-bold" : ""
+						}`}
 						onClick={() => setFeedType("following")}
 					>
 						Following
 						{feedType === "following" && (
-							<div className='absolute bottom-0 w-10  h-1 rounded-full bg-primary'></div>
+							<div className="absolute bottom-0 w-10 h-1 rounded-full bg-primary"></div>
 						)}
 					</div>
 				</div>
 
-				{/*  CREATE POST INPUT */}
-				<CreatePost />
+				{/* CREATE POST INPUT */}
+				<div className="px-2 sm:px-4">
+					<CreatePost />
+				</div>
 
 				{/* POSTS */}
-				<Posts feedType={feedType} />
+				<div className="px-2 sm:px-4">
+					<Posts feedType={feedType} />
+				</div>
 			</div>
 		</>
 	);

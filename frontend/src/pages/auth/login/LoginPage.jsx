@@ -1,105 +1,119 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
-import XSvg from "../../../components/svgs/X";
-
-import { MdOutlineMail } from "react-icons/md";
-import { MdPassword } from "react-icons/md";
-
+import { MdOutlineMail, MdPassword } from "react-icons/md";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { IoMdLogIn } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
-	const [formData, setFormData] = useState({
-		username: "",
-		password: "",
-	});
-	const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
-	const {
-		mutate: loginMutation,
-		isPending,
-		isError,
-		error,
-	} = useMutation({
-		mutationFn: async ({ username, password }) => {
-			try {
-				const res = await fetch("/api/auth/login", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({ username, password }),
-				});
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
 
-				const data = await res.json();
+  const queryClient = useQueryClient();
 
-				if (!res.ok) {
-					throw new Error(data.error || "Something went wrong");
-				}
-			} catch (error) {
-				throw new Error(error);
-			}
-		},
-		onSuccess: () => {
-			// refetch the authUser
-			queryClient.invalidateQueries({ queryKey: ["authUser"] });
-		},
-	});
+  const { mutate: loginMutation, isPending, isError, error } = useMutation({
+    mutationFn: async ({ username, password }) => {
+      try {
+        const res = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        });
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		loginMutation(formData);
-	};
+        const data = await res.json();
 
-	const handleInputChange = (e) => {
-		setFormData({ ...formData, [e.target.name]: e.target.value });
-	};
+        if (!res.ok) {
+          throw new Error(data.error || "Something went wrong");
+        }
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["authUser"] });
+    },
+  });
 
-	return (
-		<div className='max-w-screen-xl mx-auto flex h-screen'>
-			<div className='flex-1 hidden lg:flex items-center  justify-center'>
-				<XSvg className='lg:w-2/3 fill-white' />
-			</div>
-			<div className='flex-1 flex flex-col justify-center items-center'>
-				<form className='flex gap-4 flex-col' onSubmit={handleSubmit}>
-					<XSvg className='w-24 lg:hidden fill-white' />
-					<h1 className='text-4xl font-extrabold text-white'>{"Let's"} go.</h1>
-					<label className='input input-bordered rounded flex items-center gap-2'>
-						<MdOutlineMail />
-						<input
-							type='text'
-							className='grow'
-							placeholder='username'
-							name='username'
-							onChange={handleInputChange}
-							value={formData.username}
-						/>
-					</label>
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    loginMutation(formData);
+  };
 
-					<label className='input input-bordered rounded flex items-center gap-2'>
-						<MdPassword />
-						<input
-							type='password'
-							className='grow'
-							placeholder='Password'
-							name='password'
-							onChange={handleInputChange}
-							value={formData.password}
-						/>
-					</label>
-					<button className='btn rounded-full btn-primary text-white'>
-						{isPending ? "Loading..." : "Login"}
-					</button>
-					{isError && <p className='text-red-500'>{error.message}</p>}
-				</form>
-				<div className='flex flex-col gap-2 mt-4'>
-					<p className='text-white text-lg'>{"Don't"} have an account?</p>
-					<Link to='/signup'>
-						<button className='btn rounded-full btn-primary text-white btn-outline w-full'>Sign up</button>
-					</Link>
-				</div>
-			</div>
-		</div>
-	);
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  return (
+    <div className="h-screen w-screen flex flex-col md:flex-row px-6 py-10 md:px-18 md:py-20">
+      {/* Left Section - Headings and Description */}
+      <div className="md:flex-1 bg-indigo-800 text-white rounded-l-lg flex flex-col justify-center items-start p-10 md:p-16 text-center md:text-left">
+        <h1 className="text-4xl md:text-5xl text-slate-300 font-bold mb-3 md:mb-4">Welcome to Snapzy</h1>
+        <p className="text-md md:text-lg text-slate-400 max-w-md">
+          Connect with friends 😍, share your moments 🤩, and experience social media like never before. <br />
+          Join us today 👻
+        </p>
+        <button 
+                        className="mt-4 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-lg shadow-md hover:opacity-90 transition-all"
+                        onClick={() => navigate('/')}
+                    >
+                        HomePage
+                    </button>
+      </div>
+
+      {/* Right Section - Login Form */}
+      <div className="md:flex-1 flex justify-center items-center rounded-r-lg bg-gray-900 mt-6 md:mt-0">
+        <form className="flex flex-col gap-5 bg-gray-800 p-6 md:p-10 rounded-xl shadow-lg w-full max-w-[380px]" onSubmit={handleSubmit}>
+          <h2 className="text-2xl md:text-3xl font-bold text-white text-center">Login</h2>
+
+          <label className="input input-bordered flex items-center gap-2 bg-gray-700 text-white rounded-lg p-3 w-full">
+            <MdOutlineMail className="text-xl" />
+            <input
+              type="text"
+              className="grow bg-transparent outline-none"
+              placeholder="Username"
+              name="username"
+              onChange={handleInputChange}
+              value={formData.username}
+            />
+          </label>
+
+          <label className="input input-bordered flex items-center gap-2 bg-gray-700 text-white rounded-lg p-3 w-full">
+            <MdPassword className="text-xl" />
+            <input
+              type="password"
+              className="grow bg-transparent outline-none"
+              placeholder="Password"
+              name="password"
+              onChange={handleInputChange}
+              value={formData.password}
+            />
+          </label>
+
+          <button className="btn bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg">
+            <div className="flex items-center justify-center gap-1">
+              {isPending ? "Loading..." : "Login"} <IoMdLogIn className="w-5 h-4" />
+            </div>
+          </button>
+          {isError && <p className="text-red-500 text-sm">{error.message}</p>}
+
+          <div className="text-center">
+            <p className="text-white">Don't have an account?</p>
+            <Link to="/signup">
+              <button className="btn bg-transparent border-white text-white hover:bg-white hover:text-black py-3 rounded-lg w-full mt-2">
+                Sign Up
+              </button>
+            </Link>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 };
+
 export default LoginPage;

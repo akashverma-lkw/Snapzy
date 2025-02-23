@@ -49,7 +49,7 @@ const NotificationPage = () => {
 
 	return (
 		<>
-			<div className='flex-[4_4_0] border-l border-r border-gray-700 min-h-screen'>
+			<div className='flex-[4_4_0] border-l border-r mt-16 border-gray-700 min-h-screen'>
 				<div className='flex justify-between items-center p-4 border-b border-gray-700'>
 					<p className='font-bold'>Notifications</p>
 					<div className='dropdown '>
@@ -61,7 +61,7 @@ const NotificationPage = () => {
 							className='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'
 						>
 							<li>
-								<a onClick={deleteNotifications}>Delete all notifications</a>
+								<a onClick={deleteNotifications} className="text-red-500">Delete all notifications</a>
 							</li>
 						</ul>
 					</div>
