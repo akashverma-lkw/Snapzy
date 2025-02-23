@@ -1,8 +1,4 @@
-# MERN Stack Project: Build and Deploy a Twitter Clone From Scratch | JWT, Socket.io
-
-![Demo App](https://i.ibb.co/f8y9vGS/Group-82.png)
-
-[Video Tutorial on Youtube](https://youtu.be/4GUVz2psWUg)
+Description of the project____
 
 Some Features:
 
@@ -20,28 +16,11 @@ Some Features:
 -   📷 Image Uploads using Cloudinary
 -   🔔 Send Notifications
 -   🌐 Deployment
--   ⏳ And much more!
 
-### Setup .env file
-
-```js
-MONGO_URI=...
-PORT=...
-JWT_SECRET=...
-NODE_ENV=...
-CLOUDINARY_CLOUD_NAME=...
-CLOUDINARY_API_KEY=...
-CLOUDINARY_API_SECRET=...
-```
-
-### Build the app
-
-```shell
-npm run build
-```
-
-### Start the app
-
-```shell
-npm start
-```
+echo "# Snapzy" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/akashverma-lkw/Snapzy.git
+git push -u origin main# Snapzy
