@@ -24,3 +24,4 @@ git commit -m "first commit"
 git branch -M main
 git remote add origin https://github.com/akashverma-lkw/Snapzy.git
 git push -u origin main# Snapzy
+# Snapzy
