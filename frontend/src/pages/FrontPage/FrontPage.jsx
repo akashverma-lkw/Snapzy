@@ -12,11 +12,10 @@ const FrontPage = () => {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="absolute inset-0 top-6 flex justify-center md:hidden text-4xl font-extrabold text-pink-500 drop-shadow-lg tracking-wide"
+                className="absolute inset-0 top-6 flex justify-center md:hidden text-4xl font-extrabold text-pink-500 drop-shadow-lg tracking-wide z-10"
             >
                 Snapzy
             </motion.div>
-
 
             {/* Animated Gradient Heading */}
             <motion.h1
@@ -36,7 +35,7 @@ const FrontPage = () => {
                 className="max-w-2xl text-lg sm:text-xl text-gray-200 mt-4 px-4 leading-relaxed tracking-wide drop-shadow-md"
             >
                 Step into the world of <span className="text-pink-400 font-semibold">creativity</span> and <span className="text-purple-400 font-semibold">connections</span>.
-                Join Snapzy and **explore boundless opportunities** like never before.
+                Join Snapzy and <strong>explore boundless opportunities</strong> like never before.
             </motion.p>
 
             {/* Two-Column Layout */}
@@ -52,22 +51,28 @@ const FrontPage = () => {
                         Unlock Endless Possibilities 🚀
                     </h2>
                     <p className="text-lg sm:text-xl text-gray-300 leading-relaxed">
-                        Connect with a thriving community, share your thoughts, and **turn your ideas into reality**
+                        Connect with a thriving community, share your thoughts, and <strong>turn your ideas into reality</strong>.
                     </p>
                     <p className="text-lg sm:text-xl text-gray-400">
-                        Be part of something **bigger, better, and bolder**!
+                        Be part of something <strong>bigger, better, and bolder</strong>!
                     </p>
 
-                    <button
-                        className="mt-4 px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-sm sm:text-lg font-semibold rounded-full shadow-xl hover:scale-105 transition-transform"
-                        onClick={() => navigate('/login')}
-                    >
-                        Get Started <span className="ml-1">🚀</span>
-                    </button>
-                    <p className="text-gray-300 mt-3">
-                        Don't have an account?
-                        <Link to="/signup" className="text-blue-400 hover:underline font-medium"> Sign up</Link>
-                    </p>
+                    {/* Button Section */}
+                    <div className="relative z-20 flex flex-col items-start space-y-2">
+                        <button
+                            className="mt-4 px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-sm sm:text-lg font-semibold rounded-full shadow-xl hover:scale-105 transition-transform"
+                            onClick={() => {
+                                console.log("Navigating to login...");
+                                navigate('/login');
+                            }}
+                        >
+                            Get Started <span className="ml-1">🚀</span>
+                        </button>
+                        <p className="text-gray-300 mt-3">
+                            Don't have an account?
+                            <Link to="/signup" className="text-blue-400 hover:underline font-medium"> Sign up</Link>
+                        </p>
+                    </div>
                 </motion.div>
 
                 {/* Right Side - Image (Only for large screens) */}
