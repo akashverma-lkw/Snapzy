@@ -32,9 +32,9 @@ app.use(express.urlencoded({ extended: true })); // to parse form data(urlencode
 
 app.use(cookieParser());
 
-// ✅ Enable CORS for frontend requests
+// Enable CORS for frontend requests
 app.use(cors({
-	origin: "http://localhost:3000", // Allow frontend origin
+	origin: "https://snapzy-jdhz.onrender.com", // Allow frontend origin
 	credentials: true, // Allow cookies & authentication headers
 	methods: "GET,POST",
     allowedHeaders: "Content-Type",
