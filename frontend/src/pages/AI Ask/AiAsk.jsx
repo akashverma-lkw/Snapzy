@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { IoClose } from "react-icons/io5";
+import dotenv from "dotenv";
+
+
+dotenv.config();
 
 // ✅ Use environment variable from Vite `.env`
 const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5002";
+
 
 const AiAskModal = ({ isOpen, onClose }) => {
   const [question, setQuestion] = useState("");

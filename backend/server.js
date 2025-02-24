@@ -34,7 +34,7 @@ app.use(cookieParser());
 
 // ✅ Enable CORS for frontend requests
 app.use(cors({
-	origin: "https://snapzy-frontend.onrender.com", // Allow frontend origin
+	origin: process.env.VITE_FRONTEND_URL || "https://snapzy-frontend.onrender.com", // Allow frontend origin
 	credentials: true, // Allow cookies & authentication headers
 }));
 
