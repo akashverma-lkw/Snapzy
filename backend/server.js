@@ -36,11 +36,12 @@ app.use(cookieParser());
 app.use(cors({
 	origin: "https://snapzy-jdhz.onrender.com", // Allow frontend origin
 	credentials: true, // Allow cookies & authentication headers
-	methods: "GET,POST",
-    allowedHeaders: "Content-Type",
+	methods: ["GET,POST"],
+    allowedHeaders: ["Content-Type"],
 }));
 
 app.use("/api/ai", aiRoutes); // Register AI API route
+
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
