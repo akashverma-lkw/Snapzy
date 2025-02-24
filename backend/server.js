@@ -34,7 +34,7 @@ app.use(cookieParser());
 
 // ✅ Enable CORS for frontend requests
 app.use(cors({
-	origin: ["http://localhost:3000", "https://snapzy-jtzf.onrender.com"], // Allow frontend origin
+	origin: process.env.FRONTEND_URL, // Allow frontend origin
 	credentials: true, // Allow cookies & authentication headers
 }));
 
@@ -44,7 +44,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/notifications", notificationRoutes);
 
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === "development") {
 	app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
 	app.get("*", (req, res) => {
