@@ -51,7 +51,7 @@ const NotificationPage = () => {
 	return (
 		<>
 			<Helmet>
-				<title>Notifications Page | Snapzy </title>
+				<title>Notification Page | Snapzy </title>
 			</Helmet>
 			<div className='flex-[4_4_0] border-l border-r mt-16 border-gray-700 min-h-screen'>
 				<div className='flex justify-between items-center p-4 border-b border-gray-700'>

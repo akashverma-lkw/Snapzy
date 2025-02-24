@@ -75,36 +75,6 @@ const ProfilePage = () => {
   }, [username, refetch]);
 
   return (
-<<<<<<< HEAD
-    <div className="flex-[4_4_0] mt-16 border-r border-gray-700 min-h-screen w-full max-w-xl mx-auto px-2 sm:px-4">
-      {(isLoading || isRefetching) && <ProfileHeaderSkeleton />} 
-      {!isLoading && !isRefetching && !user && (
-        <p className="text-center text-lg mt-4">User not found</p>
-      )}
-      {!isLoading && !isRefetching && user && (
-        <>
-          <div className="flex gap-4 px-4 py-2 items-center">
-            <Link to="/homepage">
-              <FaArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
-            </Link>
-            <div className="flex flex-col">
-              <p className="font-bold text-lg sm:text-xl">{user?.fullName}</p>
-              <span className="text-sm text-slate-500">{POSTS?.length} posts</span>
-            </div>
-          </div>
-          <div className="relative group/cover">
-            <img
-              src={coverImg || user?.coverImg || "/cover.png"}
-              className="h-40 sm:h-52 w-full object-cover"
-              alt="cover"
-            />
-            {isMyProfile && (
-              <div
-                className="absolute top-2 right-2 rounded-full p-2 bg-gray-800 bg-opacity-75 cursor-pointer opacity-0 group-hover/cover:opacity-100 transition duration-200"
-                onClick={() => coverImgRef.current.click()}
-              >
-                <MdEdit className="w-5 h-5 text-white" />
-=======
     <>
       <Helmet>
         <title>Profile Page | Snapzy </title>
@@ -117,13 +87,12 @@ const ProfilePage = () => {
         {!isLoading && !isRefetching && user && (
           <>
             <div className="flex gap-4 px-4 py-2 items-center">
-              <Link to="/">
+              <Link to="/homepage">
                 <FaArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
               </Link>
               <div className="flex flex-col">
                 <p className="font-bold text-lg sm:text-xl">{user?.fullName}</p>
                 <span className="text-sm text-slate-500">{POSTS?.length} posts</span>
->>>>>>> b18e720 (Helmet Dynamic added)
               </div>
             </div>
             <div className="relative group/cover">
