@@ -104,7 +104,7 @@ const Navbar = () => {
             onClick={() => setIsAiModalOpen(true)}
             className="md:hidden flex items-center gap-2 hover:bg-stone-900 transition-all rounded-full duration-300 py-2 px-4 text-white"
           >
-            <FaInfinity className="w-5 h-5" />
+            <FaInfinity className="w-6 h-6" />
             <span className="text-lg">Ai Ask</span>
           </button>
           <AiAskModal isOpen={isAiModalOpen} onClose={() => setIsAiModalOpen(false)} />

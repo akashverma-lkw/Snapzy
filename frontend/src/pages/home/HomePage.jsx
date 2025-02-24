@@ -21,7 +21,7 @@ const HomePage = () => {
 					>
 						For You
 						{feedType === "forYou" && (
-							<div className="absolute bottom-0 w-10 h-1 rounded-full bg-primary"></div>
+							<div className="absolute bottom-0 w-10 h-1 rounded-full bg-yellow-500"></div>
 						)}
 					</div>
 					<div
@@ -31,7 +31,7 @@ const HomePage = () => {
 					>
 						Following
 						{feedType === "following" && (
-							<div className="absolute bottom-0 w-10 h-1 rounded-full bg-primary"></div>
+							<div className="absolute bottom-0 w-10 h-1 rounded-full bg-yellow-500"></div>
 						)}
 					</div>
 				</div>
