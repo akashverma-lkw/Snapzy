@@ -26,15 +26,16 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // ✅ Middleware
-app.use(express.json({ limit: "5mb" })); // To parse JSON requests
-app.use(express.urlencoded({ extended: true })); // To parse form data
-app.use(cookieParser());
+app.use(express.json({ limit: "5mb" })); // Parse JSON requests
+app.use(express.urlencoded({ extended: true })); // Parse form data
+app.use(cookieParser()); // Parse cookies
 
 // ✅ Enable CORS for frontend requests
-const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000"; // Default to local frontend
+const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000"; 
 app.use(cors({
 	origin: FRONTEND_URL,
 	credentials: true, // Allow cookies & authentication headers
+	methods: ["GET", "POST", "PUT", "DELETE"],
 }));
 
 // ✅ Connect to MongoDB
