@@ -33,14 +33,17 @@ const LoginPage = () => {
         const data = await res.json();
 
         if (!res.ok) {
-          throw new Error(data.error || "Something went wrong");
+          console.error("Login request failed:", error);
+          throw new Error(error.message || "Something went wrong");
         }
+        return data;
       } catch (error) {
         throw new Error(error);
       }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["authUser"] });
+      localStorage.setItem("authUser", JSON.stringify(data));
     },
   });
 
