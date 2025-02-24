@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { IoClose } from "react-icons/io5";
 
 // ✅ Use environment variable from Vite `.env`
-const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5002";
+const API_BASE_URL = "http://localhost:5002";
 
 const AiAskModal = ({ isOpen, onClose }) => {
   const [question, setQuestion] = useState("");
