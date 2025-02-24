@@ -1,14 +1,12 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { MdOutlineMail, MdPassword } from "react-icons/md";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { IoMdLogIn } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-  console.log("API Base URL:", API_BASE_URL);
-
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -20,26 +18,26 @@ const LoginPage = () => {
 
   const { mutate: loginMutation, isPending, isError, error } = useMutation({
     mutationFn: async ({ username, password }) => {
-      const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include", // ✅ Ensure cookies are sent with the request
-        body: JSON.stringify({ username, password }),
-      });
+      try {
+        const res = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        });
 
-      const data = await res.json();
+        const data = await res.json();
 
-      if (!res.ok) {
-        throw new Error(data.message || "Invalid credentials");
+        if (!res.ok) {
+          throw new Error(data.error || "Something went wrong");
+        }
+      } catch (error) {
+        throw new Error(error);
       }
-      return data;
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["authUser"] });
-      localStorage.setItem("authUser", JSON.stringify(data)); // ✅ Store user data properly
-      navigate("/"); // ✅ Redirect after successful login
     },
   });
 
@@ -55,14 +53,15 @@ const LoginPage = () => {
   return (
     <>
       <Helmet>
-        <title>Login Page | Snapzy</title>
+        <title>Login Page | Snapzy </title>
       </Helmet>
       <div className="h-screen w-screen flex flex-col md:flex-row px-6 py-10 md:px-18 md:py-20">
-        {/* Left Section */}
+        {/* Left Section - Headings and Description */}
         <div className="md:flex-1 bg-indigo-800 text-white rounded-l-lg flex flex-col justify-center items-start p-10 md:p-16 text-center md:text-left">
           <h1 className="text-4xl md:text-5xl text-slate-300 font-bold mb-3 md:mb-4">Welcome to Snapzy</h1>
           <p className="text-md md:text-lg text-slate-400 max-w-md">
-            Connect with friends 😍, share your moments 🤩, and experience social media like never before.
+            Connect with friends 😍, share your moments 🤩, and experience social media like never before. <br />
+            Join us today 👻
           </p>
           <button
             className="mt-4 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-lg shadow-md hover:opacity-90 transition-all"

@@ -15,7 +15,6 @@ import connectMongoDB from "./db/connectMongoDB.js";
 
 dotenv.config();
 
-// ✅ Cloudinary Configuration
 cloudinary.config({
 	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
 	api_key: process.env.CLOUDINARY_API_KEY,
@@ -24,36 +23,36 @@ cloudinary.config({
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const __dirname = path.resolve();
 
-// ✅ Middleware
-app.use(express.json({ limit: "5mb" })); // Parse JSON requests
-app.use(express.urlencoded({ extended: true })); // Parse form data
-app.use(cookieParser()); // Parse cookies
+app.use(express.json({ limit: "5mb" })); // to parse req.body
+
+// limit shouldn't be too high to prevent DOS
+app.use(express.urlencoded({ extended: true })); // to parse form data(urlencoded)
+
+app.use(cookieParser());
 
 // ✅ Enable CORS for frontend requests
-const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000"; 
 app.use(cors({
-	origin: FRONTEND_URL,
+	origin: "http://localhost:3000", // Allow frontend origin
 	credentials: true, // Allow cookies & authentication headers
-	methods: ["GET", "POST", "PUT", "DELETE"],
 }));
 
-// ✅ Connect to MongoDB
-connectMongoDB();
-
-// ✅ API Routes
-app.use("/api/ai", aiRoutes);
+app.use("/api/ai", aiRoutes); // Register AI API route
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/notifications", notificationRoutes);
 
-// ✅ Health Check Route (for debugging)
-app.get("/", (req, res) => {
-	res.send("Snapzy Backend is running! 🚀");
-});
+if (process.env.NODE_ENV === "production") {
+	app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
-// ✅ Start Server
+	app.get("*", (req, res) => {
+		res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+	});
+}
+
 app.listen(PORT, () => {
-	console.log(`✅ Server is running on port ${PORT}`);
+	console.log(`Server is running on port ${PORT}`);
+	connectMongoDB();
 });
