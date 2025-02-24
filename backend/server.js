@@ -3,7 +3,9 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import { v2 as cloudinary } from "cloudinary";
+import cors from "cors"; 
 
+import aiRoutes from "./routes/ai.route.js";
 import authRoutes from "./routes/auth.route.js";
 import userRoutes from "./routes/user.route.js";
 import postRoutes from "./routes/post.route.js";
@@ -24,11 +26,19 @@ const PORT = process.env.PORT || 5000;
 const __dirname = path.resolve();
 
 app.use(express.json({ limit: "5mb" })); // to parse req.body
+
 // limit shouldn't be too high to prevent DOS
 app.use(express.urlencoded({ extended: true })); // to parse form data(urlencoded)
 
 app.use(cookieParser());
 
+// ✅ Enable CORS for frontend requests
+app.use(cors({
+	origin: "http://localhost:3000", // Allow frontend origin
+	credentials: true, // Allow cookies & authentication headers
+}));
+
+app.use("/api/ai", aiRoutes); // Register AI API route
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);

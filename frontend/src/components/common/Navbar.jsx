@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { FaInfinity } from "react-icons/fa6";
 import { MdHomeFilled } from "react-icons/md";
 import { IoNotifications } from "react-icons/io5";
 import { FaUser } from "react-icons/fa";
@@ -10,9 +11,14 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 
+import AiAskModal from "../../pages/AI Ask/AiAsk";
+
+
 const Navbar = () => {
+  const [isAiModalOpen, setIsAiModalOpen] = useState(false);
+
   const navigate = useNavigate();
-  
+
   const queryClient = useQueryClient();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -78,8 +84,30 @@ const Navbar = () => {
             <span className="text-lg hidden md:inline">Profile</span>
           </Link>
         </li>
+
+        {/* AI Ask link */}
+        <li>
+          <button
+            onClick={() => setIsAiModalOpen(true)}
+            className="flex items-center gap-2 hover:bg-stone-900 transition-all rounded-full duration-300 py-2 px-4 text-white"
+          >
+            <FaInfinity className="w-6 h-6" />
+            <span className="text-lg hidden md:inline">Ai Ask</span>
+          </button>
+          <AiAskModal isOpen={isAiModalOpen} onClose={() => setIsAiModalOpen(false)} />
+        </li>
+        
       </ul>
 
+
+      <button
+            onClick={() => setIsAiModalOpen(true)}
+            className="md:hidden flex items-center gap-2 hover:bg-stone-900 transition-all rounded-full duration-300 py-2 px-4 text-white"
+          >
+            <FaInfinity className="w-5 h-5" />
+            <span className="text-lg">Ai Ask</span>
+          </button>
+          <AiAskModal isOpen={isAiModalOpen} onClose={() => setIsAiModalOpen(false)} />
       {/* Mobile Menu Icon */}
       <button className="md:hidden text-white text-2xl" onClick={() => setMenuOpen(!menuOpen)}>
         <RxHamburgerMenu />
@@ -105,7 +133,7 @@ const Navbar = () => {
             <FaUser className="w-6 h-6" />
             <span>Profile</span>
           </Link>
-  
+
           <div
             className="flex gap-1 cursor-pointer text-white hover:text-red-500 mt-4"
             onClick={(e) => {
