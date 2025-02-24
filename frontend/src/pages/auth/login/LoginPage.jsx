@@ -7,7 +7,7 @@ import { IoMdLogIn } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
-  const API_BASE_URL = import.meta.env.API_BASE_URL;
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URLL;
   console.log("API Base URL:", API_BASE_URL);
 
   const navigate = useNavigate();
