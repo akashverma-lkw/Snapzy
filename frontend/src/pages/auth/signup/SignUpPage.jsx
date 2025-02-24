@@ -16,10 +16,12 @@ const SignUpPage = () => {
 
   const queryClient = useQueryClient();
 
+  const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5002";
+
   const { mutate, isError, isPending, error } = useMutation({
     mutationFn: async ({ email, username, fullName, password }) => {
       try {
-        const res = await fetch("/api/auth/signup", {
+        cconst res = await fetch(`${API_BASE_URL}/api/auth/signup`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
