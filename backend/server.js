@@ -34,7 +34,7 @@ app.use(cookieParser());
 
 // ✅ Enable CORS for frontend requests
 app.use(cors({
-	origin: "http://localhost:3000", // Allow frontend origin
+	origin: "https://snapzy-frontend.onrender.com", // Allow frontend origin
 	credentials: true, // Allow cookies & authentication headers
 }));
 
