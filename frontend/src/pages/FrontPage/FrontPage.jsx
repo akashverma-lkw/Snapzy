@@ -1,11 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 
 const FrontPage = () => {
     const navigate = useNavigate();
 
     return (
+        <>
+        <Helmet>
+        <title>Snapzy || a social media platform ...</title>
+      </Helmet>
         <div className="flex flex-col items-center justify-center min-h-screen w-full text-center px-6 relative text-white">
             {/* Snapzy Title for Mobile */}
             <motion.div
@@ -90,6 +95,7 @@ const FrontPage = () => {
                 </motion.div>
             </div>
         </div>
+        </>
     );
 };
 
