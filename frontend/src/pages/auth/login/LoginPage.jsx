@@ -20,6 +20,7 @@ const LoginPage = () => {
     mutationFn: async ({ username, password }) => {
       try {
         const API = import.meta.env.VITE_API_BASE_URL;
+        console.log(API);
         const res = await fetch(`${API}/api/auth/login`, {
           method: "POST",
           headers: {
