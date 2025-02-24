@@ -14,7 +14,7 @@ const AiAskModal = ({ isOpen, onClose }) => {
     setResponse("");
 
     try {
-      const response = await fetch("http://localhost:5002/api/ai/ask", {
+      const response = await fetch("https://localhost:5002/api/ai/ask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question }),
