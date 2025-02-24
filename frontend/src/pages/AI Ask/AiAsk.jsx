@@ -2,34 +2,41 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { IoClose } from "react-icons/io5";
 
+// ✅ Use environment variable from Vite `.env`
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5002";
+
 const AiAskModal = ({ isOpen, onClose }) => {
   const [question, setQuestion] = useState("");
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleAsk = async () => {
     if (!question.trim()) return;
 
     setLoading(true);
     setResponse("");
+    setError("");
 
     try {
-      const response = await fetch("https://snapzy-backend.onrender.com", {
+      const res = await fetch(`${API_BASE_URL}/api/ai/ask`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question }),
       });
 
-      const data = await response.json();
+      if (!res.ok) throw new Error(`HTTP Error! Status: ${res.status}`);
 
-      if (data?.response) {
-        setResponse(data.response);
-      } else {
-        setResponse("Sorry, I couldn't process your question.");
+      const contentType = res.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error("Invalid response format.");
       }
-    } catch (error) {
-      console.error("Error fetching AI response:", error);
-      setResponse("An error occurred while fetching the response.");
+
+      const data = await res.json();
+      setResponse(data?.response || "Sorry, I couldn't process your question.");
+    } catch (err) {
+      console.error("Error fetching AI response:", err);
+      setError("An error occurred while fetching the response.");
     }
 
     setLoading(false);
@@ -63,19 +70,31 @@ const AiAskModal = ({ isOpen, onClose }) => {
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           className="w-full border border-gray-600 bg-gray-800 text-white rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          autoFocus // ✅ Autofocus input
         />
 
         {/* Submit Button */}
         <button
-          className="mt-4 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
+          className="mt-4 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition flex items-center justify-center"
           onClick={handleAsk}
           disabled={loading}
         >
-          {loading ? "Thinking..." : "Ask"}
+          {loading ? (
+            <>
+              <svg className="animate-spin h-5 w-5 mr-2 text-white" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+              </svg>
+              Thinking...
+            </>
+          ) : (
+            "Ask"
+          )}
         </button>
 
         {/* Response Section */}
         {response && <p className="mt-4 text-gray-300">{response}</p>}
+        {error && <p className="mt-4 text-red-400">{error}</p>}
       </motion.div>
     </div>
   );
