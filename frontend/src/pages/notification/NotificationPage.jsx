@@ -53,19 +53,19 @@ const NotificationPage = () => {
 			<Helmet>
 				<title>Notification Page | Snapzy </title>
 			</Helmet>
-			<div className='flex-[4_4_0] border-l border-r mt-16 border-gray-700 min-h-screen'>
+			<div className='flex-[4_4_0] border-l border-r mt-16 border-gray-700 min-h-screen w-full max-w-2xl mx-auto'>
 				<div className='flex justify-between items-center p-4 border-b border-gray-700'>
 					<p className='font-bold'>Notifications</p>
-					<div className='dropdown '>
+					<div className='dropdown'>
 						<div tabIndex={0} role='button' className='m-1'>
 							<IoSettingsOutline className='w-4' />
 						</div>
 						<ul
 							tabIndex={0}
-							className='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'
+							className='dropdown-content absolute right-0 mt-2 z-10 menu p-2 shadow bg-base-100 rounded-lg w-52 max-w-[90vw] md:max-w-[80vw]'
 						>
 							<li>
-								<a onClick={deleteNotifications} className="text-red-500">Delete all notifications</a>
+								<a onClick={deleteNotifications} className="rounded-lg text-red-600">Delete all notifications</a>
 							</li>
 						</ul>
 					</div>
