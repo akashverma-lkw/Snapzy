@@ -3,14 +3,14 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import { v2 as cloudinary } from "cloudinary";
-import cors from "cors"; 
-import { fileURLToPath } from "url";  // Fix __dirname in ES Modules
+import cors from "cors";
+import { fileURLToPath } from "url";  
 import connectMongoDB from "./db/connectMongoDB.js";
 
-// Load environment variables first
+// Load Environment Variables
 dotenv.config();
 
-// Fix __dirname for ES modules
+// Fix __dirname for ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -26,18 +26,26 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(express.json({ limit: "5mb" })); // to parse JSON
-app.use(express.urlencoded({ extended: true })); // to parse form data
+app.use(express.json({ limit: "5mb" }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Enable CORS for frontend requests
-const FRONTEND_URL = process.env.VITE_FRONTEND_URL || "https://snapzy-frontend.onrender.com";
+// CORS Configuration
+const FRONTEND_URL = process.env.FRONTEND_URL || "https://snapzy-frontend.onrender.com";
 console.log("Allowed Frontend URL:", FRONTEND_URL);
 
 app.use(cors({
-	origin: FRONTEND_URL, // Allow frontend origin
-	credentials: true, // Allow cookies & authentication headers
+	origin: FRONTEND_URL,
+	credentials: true,
+	methods: ["GET", "POST", "PUT", "DELETE"],
+	allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
+// Debugging: Log Incoming Requests
+app.use((req, res, next) => {
+	console.log(`[${req.method}] ${req.url}`);
+	next();
+});
 
 // Import Routes
 import aiRoutes from "./routes/ai.route.js";
@@ -53,18 +61,8 @@ app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/notifications", notificationRoutes);
 
-// Serve Frontend in Production
-if (process.env.NODE_ENV === "production") {
-	const frontendPath = path.join(__dirname, "frontend", "dist");
-	app.use(express.static(frontendPath));
-
-	app.get("*", (req, res) => {
-		res.sendFile(path.resolve(frontendPath, "index.html"));
-	});
-}
-
 // Start Server
 app.listen(PORT, async () => {
-	console.log(`Server is running on port ${PORT}`);
+	console.log(`✅ Server is running on port ${PORT}`);
 	await connectMongoDB();
 });
